@@ -22,7 +22,7 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-       os: [ubuntu-latest, windows-latest, macOS-latest]
+       os: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v3
@@ -35,4 +35,11 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
+    - name: build docker image and repo push
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: vaishnavi0601/demo-repo
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
